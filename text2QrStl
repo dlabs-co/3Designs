@@ -61,9 +61,10 @@ done
     tmp=`mktemp`;
     qrencode -o $tmp.qr $1
     qr2scad < $tmp.qr > $tmp.scad;
-    openscad $tmp.scad -o $2.stl
-    rm $tmp.*
-}&>/dev/null
+#    openscad $tmp.scad -o $2.stl
+    #rm $tmp.*
+    echo $tmp
+}
 
 [[ -f $2.stl ]] && {
     echo "Your qr stl is in $2.stl with text $1"
