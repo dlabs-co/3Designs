@@ -42,7 +42,7 @@ deps=(
     ['openscad']="http://www.openscad.org/"
     ['qrencode']="http://fukuchi.org/works/qrencode/"
 )
-openscadFunction="difference(){cube(10, 10, 2); qrcode();}";
+openscadFunction="difference(){qrcode(); cube(10,10,2);}";
 
 for dep in ${!deps[@]}; do
     type $dep &>/dev/null || {
