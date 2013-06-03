@@ -42,7 +42,7 @@ deps=(
     ['openscad']="http://www.openscad.org/"
     ['qrencode']="http://fukuchi.org/works/qrencode/"
 )
-openscadFunction="difference(){qrcode(); cube(10,10,2);}";
+openscadFunction="union(){qrcode();}";
 
 for dep in ${!deps[@]}; do
     type $dep &>/dev/null || {
@@ -65,7 +65,7 @@ done
     sed -i s/qrcode\(\)\;//g $tmp.scad
     echo $openscadFunction >> $tmp.scad
     openscad $tmp.scad -o $2.stl
-    rm $tmp.*
+    #rm $tmp.*
 }
 
 [[ -f $2.stl ]] && {
