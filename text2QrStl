@@ -44,7 +44,8 @@ deps=(
     ['openscad']="http://www.openscad.org/"
     ['qrencode']="http://fukuchi.org/works/qrencode/"
 )
-openscadFunction="scale([$scale,$scale,$scale]){union(){qrcode();}}";
+
+openscadFunction="scale([$scale,$scale,$scale]){union(){qrcode(); translate([-10, -10, -1]) cube([max,max,1]); }}";
 
 for dep in ${!deps[@]}; do
     type $dep &>/dev/null || {
