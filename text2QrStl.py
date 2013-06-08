@@ -6,6 +6,7 @@
 
 import qrcode
 import sys
+import os
 import argparse
 import subprocess
 
@@ -76,8 +77,22 @@ if __name__ == "__main__":
     if args.filename:
         with open(args.filename, "w") as file_:
             file_.write(qr.make_scad())
+        sys.platform.startswith('win')
+
+        openscad_binary = "openscad"
+
+        if sys.platform.startswith('win'):
+            openscad_binary = os.path.join(
+                os.environ["ProgramFiles"], "OpenScad",
+                openscad_binary + ".exe"
+            )
+
+
         subprocess.Popen(
-            ["openscad", args.filename, "-o", args.filename + ".stl"]
+            [
+                openscad_binary, args.filename,
+                "-o", args.filename + ".stl"
+            ]
         )
     else:
         print
