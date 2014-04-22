@@ -27,10 +27,12 @@ text2QrStl - Simple script to convert a text into a qrcode with stl format
 Get your text into real life.
 David Francos Cuartero <me@davidfrancos.net>
 
-    Usage : text2qrstl <Text to convert to stl> <filename>
+    Usage : text2qrstl <Text to convert to stl> <filename> [scale_size]
 EOD
     exit 1;
 }
+
+[[ $3 ]] && scale=$3 || scale=2
 
 colors=(
     ['red']="\033[0;31m"
@@ -42,7 +44,8 @@ deps=(
     ['openscad']="http://www.openscad.org/"
     ['qrencode']="http://fukuchi.org/works/qrencode/"
 )
-openscadFunction="difference(){qrcode(); cube(10,10,2);}";
+
+openscadFunction="scale([$scale,$scale,$scale]){union(){qrcode(); translate([-10, -10, -1]) cube([qr_size,qr_size,1]); }}";
 
 for dep in ${!deps[@]}; do
     type $dep &>/dev/null || {
@@ -65,7 +68,7 @@ done
     sed -i s/qrcode\(\)\;//g $tmp.scad
     echo $openscadFunction >> $tmp.scad
     openscad $tmp.scad -o $2.stl
-    rm $tmp.*
+    #rm $tmp.*
 }
 
 [[ -f $2.stl ]] && {
